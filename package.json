@@ -1,0 +1,17 @@
+{
+  "name": "prep-list",
+  "version": "1.0.0",
+  "description": "An application to make prep seamless and efficient.",
+  "main": "prep.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0",
+    "pg": "^8.15.6"
+  }
+}
