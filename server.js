@@ -14,7 +14,7 @@ app.use(express.json());
 const pool = new Pool(
   {
     // TODO: Enter PostgreSQL username
-    user: '',
+    user: 'cwald',
     // TODO: Enter PostgreSQL password
     password: 'Michael2400!',
     host: 'localhost',
@@ -26,18 +26,28 @@ const pool = new Pool(
 pool.connect();
 
 // API endpoint to fetch data
-app.get('/api/items', async (req, res) => {
+app.get('/stations', async (req, res) => {
   try {
-    const result = await pool.query(`
-      SELECT s.name as station, i.name as item, i.par_quantity
-      FROM items i
-      JOIN stations s ON i.station_id = s.id
-      ORDER BY s.name, i.name
-    `);
+    const result = await pool.query('SELECT * FROM stations');
     res.json(result.rows);
   } catch (err) {
     console.error(err);
-    res.status(500).send('Error fetching items');
+    res.status(500).send("Server Error");
+  }
+});
+
+// Get items for a station
+app.get('/items/:stationId', async (req, res) => {
+  const stationId = req.params.stationId;
+  try {
+    const result = await pool.query(
+      'SELECT id, name, par_quantity FROM items WHERE station_id = $1',
+      [stationId]
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Server Error");
   }
 });
 

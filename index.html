@@ -2,33 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Kitchen Prep List</title>
+  <title>Prep List App</title>
   <style>
-    body { font-family: sans-serif; padding: 20px; }
-    h2 { margin-top: 40px; }
-    table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }
-    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-    th { background: #f4f4f4; }
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .hidden { display: none; }
+    .item-group { margin-bottom: 10px; }
+    label { display: inline-block; width: 200px; }
+    input[type="number"] { width: 60px; }
   </style>
 </head>
 <body>
-  <h1>Kitchen Prep Lists</h1>
 
-  <div id="saute">
-    <h2>Saute Station</h2>
-    <table><thead><tr><th>Item</th><th>Par</th></tr></thead><tbody></tbody></table>
-  </div>
+  <h1>Prep List App</h1>
 
-  <div id="grill">
-    <h2>Grill Station</h2>
-    <table><thead><tr><th>Item</th><th>Par</th></tr></thead><tbody></tbody></table>
-  </div>
-
-  <div id="cold">
-    <h2>Cold Station</h2>
-    <table><thead><tr><th>Item</th><th>Par</th></tr></thead><tbody></tbody></table>
-  </div>
-
-  <script src="app.js"></script>
-</body>
-</html>
+  <div id="station-selection">
+    <label for="station">Select Station:</label>
+    <select id="station">
+      <option value="">-- Choose --</option>
+    </select>
