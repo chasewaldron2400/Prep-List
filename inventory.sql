@@ -1,24 +1,24 @@
 -- Active: 1723505728753@@127.0.0.1@5432@inventory_db
 -- Table for stations
+-- Drop and create database
 DROP DATABASE IF EXISTS inventory_db;
 CREATE DATABASE inventory_db;
 
+-- Connect to inventory_db before running next statements
+
+-- Then, create user and grant privileges
 CREATE USER cwald WITH PASSWORD 'Michael2400!';
 GRANT ALL PRIVILEGES ON DATABASE inventory_db TO cwald;
 
-SELECT * FROM stations;
+-- Switch to the new database (important!)
+\c inventory_db
 
--- Insert a station
-INSERT INTO stations (name) VALUES ('Grill');
-
-SELECT id FROM stations WHERE name = 'Grill';
- 
+-- Create tables
 CREATE TABLE stations (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL UNIQUE
 );
 
--- Table for items
 CREATE TABLE items (
     id SERIAL PRIMARY KEY,
     station_id INTEGER NOT NULL,
@@ -26,3 +26,24 @@ CREATE TABLE items (
     par_quantity INTEGER NOT NULL,
     FOREIGN KEY (station_id) REFERENCES stations(id)
 );
+
+CREATE TABLE locations (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL UNIQUE
+);
+
+ALTER TABLE items
+ADD COLUMN location_id INTEGER,
+ADD FOREIGN KEY (location_id) REFERENCES locations(id);
+
+INSERT INTO locations (name) VALUES ('Basement'), ('1st Floor Prep');
+
+
+-- Insert sample station
+INSERT INTO stations (name) VALUES ('Grill');
+
+-- (Optional) Insert sample item
+-- INSERT INTO items (station_id, name, par_quantity) VALUES (1, 'Spatula', 10);
+
+-- Test query
+SELECT * FROM stations;

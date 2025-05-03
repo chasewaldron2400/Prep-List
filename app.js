@@ -5,7 +5,7 @@ let stationMap = {}; // maps station name to id
 window.onload = async () => {
   const stationSelect = document.getElementById("station");
 
-  const res = await fetch("http://localhost:3000/stations");
+  const res = await fetch("http://localhost:3001/stations");
   const stations = await res.json();
 
   stations.forEach(station => {
@@ -34,8 +34,8 @@ async function loadItems() {
     const div = document.createElement("div");
     div.className = "item-group";
     div.innerHTML = `
-      <label>${item.name} (Par: ${item.par_quantity}):</label>
-      <input type="number" min="0" name="${item.name}" required>
+      <label>${item.name} (Par: ${item.par_quantity}, Location: ${item.location_name}):</label>
+  <input type="number" min="0" name="${item.name}" required>
     `;
     container.appendChild(div);
   });
