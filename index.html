@@ -53,7 +53,7 @@
         const div = document.createElement("div");
         div.className = "item-group";
         div.innerHTML = `
-          <label>${item.name} (Par: ${item.par_quantity}, Location: ${item.location_name}):</label>
+          <label>${item.name} (Par: ${item.par_quantity}. ${item.unit}, Location: ${item.location_name}):</label>
           <input type="number" min="0" name="${item.id}" data-par="${item.par_quantity}" data-location="${item.location_name}" required>
         `;
         itemsContainer.appendChild(div);
@@ -76,7 +76,7 @@
 
         if (needed > 0) {
           const li = document.createElement("li");
-          li.textContent = `${needed} x ${item.name} needed from ${location}`;
+          li.textContent = `${needed}x ${item.unit} of ${item.name} needed from ${location}`;
           resultsList.appendChild(li);
         }
       });

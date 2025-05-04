@@ -66,11 +66,11 @@ app.get('/items/:stationId', async (req, res) => {
 
   try {
     const result = await pool.query(
-      `SELECT items.id, items.name, items.par_quantity, locations.name AS location_name
+      `SELECT items.id, items.name, items.par_quantity, items.unit, locations.name AS location_name
        FROM items
        JOIN locations ON items.location_id = locations.id
        WHERE items.station_id = $1`,
-      [stationId] // use $1 placeholder
+      [stationId]
     );
     res.json(result.rows);
   } catch (err) {

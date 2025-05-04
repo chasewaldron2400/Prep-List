@@ -41,6 +41,9 @@ INSERT INTO locations (name) VALUES ('Basement'), ('1st Floor Prep');
 
 SELECT * FROM items WHERE station_id = 1;
 
+ALTER TABLE items ADD COLUMN unit TEXT;
+
+
 -- Insert sample station
 INSERT INTO stations (name) VALUES ('Grill');
 
