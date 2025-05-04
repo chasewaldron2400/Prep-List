@@ -25,6 +25,7 @@ CREATE TABLE items (
     name TEXT NOT NULL,
     par_quantity INTEGER NOT NULL,
     FOREIGN KEY (station_id) REFERENCES stations(id)
+    FOREIGN KEY (location_id) REFERENCES locations(id)
 );
 
 CREATE TABLE locations (
@@ -38,6 +39,7 @@ ADD FOREIGN KEY (location_id) REFERENCES locations(id);
 
 INSERT INTO locations (name) VALUES ('Basement'), ('1st Floor Prep');
 
+SELECT * FROM items WHERE station_id = 1;
 
 -- Insert sample station
 INSERT INTO stations (name) VALUES ('Grill');
