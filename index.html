@@ -14,15 +14,23 @@
     .hidden {
       display: none;
     }
+    .station-buttons button {
+      margin-right: 10px;
+    }
   </style>
 </head>
 <body>
 
   <h1>Inventory Prep List</h1>
 
-  <button id="start-button">Start Prep List</button>
+  <div class="station-buttons">
+    <button data-station-id="1">Saute</button>
+    <button data-station-id="2">Grill</button>
+    <button data-station-id="3">Cold</button>
+  </div>
 
   <form id="prep-form" class="hidden">
+    <h2 id="station-title"></h2>
     <div id="items-container"></div>
     <button type="submit">Submit Counts</button>
   </form>
@@ -33,30 +41,39 @@
   </div>
 
   <script>
-    const startButton = document.getElementById("start-button");
     const prepForm = document.getElementById("prep-form");
     const itemsContainer = document.getElementById("items-container");
     const resultsContainer = document.getElementById("prep-results");
     const resultsList = document.getElementById("results-list");
+    const stationTitle = document.getElementById("station-title");
 
     let items = [];
 
-    startButton.addEventListener("click", async () => {
-      startButton.classList.add("hidden");
-      prepForm.classList.remove("hidden");
+    document.querySelectorAll(".station-buttons button").forEach(button => {
+      button.addEventListener("click", async () => {
+        const stationId = button.getAttribute("data-station-id");
+        const stationName = button.textContent;
 
-      // Fetch all items from a default station (ID = 1), you can change or make dynamic
-      const res = await fetch("http://localhost:3001/items/1");
-      items = await res.json();
+        // Reset UI
+        prepForm.classList.remove("hidden");
+        resultsContainer.classList.add("hidden");
+        itemsContainer.innerHTML = "";
+        stationTitle.textContent = `${stationName} Station`;
 
-      items.forEach(item => {
-        const div = document.createElement("div");
-        div.className = "item-group";
-        div.innerHTML = `
-          <label>${item.name} (Par: ${item.par_quantity}. ${item.unit}, Location: ${item.location_name}):</label>
-          <input type="number" min="0" name="${item.id}" data-par="${item.par_quantity}" data-location="${item.location_name}" required>
-        `;
-        itemsContainer.appendChild(div);
+        // Fetch items for selected station
+        const res = await fetch(`http://localhost:3001/items/${stationId}`);
+        items = await res.json();
+
+        // Render form
+        items.forEach(item => {
+          const div = document.createElement("div");
+          div.className = "item-group";
+          div.innerHTML = `
+            <label>${item.name} (Par: ${item.par_quantity}, ${item.unit}, Location: ${item.location_name}):</label>
+            <input type="number" min="0" name="${item.id}" data-par="${item.par_quantity}" data-location="${item.location_name}" required>
+          `;
+          itemsContainer.appendChild(div);
+        });
       });
     });
 
