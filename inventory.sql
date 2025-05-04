@@ -1,7 +1,6 @@
 -- Active: 1723505728753@@127.0.0.1@5432@inventory_db
 -- Table for stations
 -- Drop and create database
-DROP DATABASE IF EXISTS inventory_db;
 CREATE DATABASE inventory_db;
 
 -- Connect to inventory_db before running next statements
